@@ -1,7 +1,8 @@
 from os.path import abspath, dirname, join
 
-filename = abspath(join(dirname(__file__), 'input.txt'))
-data = open(filename, 'r').read().splitlines()
+with open(abspath(join(dirname(__file__), 'input.txt')), 'r') as f:
+    data = f.read().splitlines()
+
 max_x = len(data[0])
 
 def getHits(dx, dy):
