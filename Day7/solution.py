@@ -10,14 +10,10 @@ def parseData(data, withnumber):
     words = row.split()          
     for i, word in enumerate(words):
       if word.isdigit():
-        if withnumber:
-          childs.append(" ".join(words[i:i+3]))        
-        else:
-          childs.append(" ".join(words[i+1:i+3]))        
+        childs.append(" ".join(words[i:i+3])) if withnumber else childs.append(" ".join(words[i+1:i+3]))                  
     parent = " ".join(words[:2])
     output[parent] = childs    
   return output
-
 
 def part1(data, searchValue):      
   output = set()  
@@ -31,7 +27,7 @@ def part2(data, root):
   output = 0
   for child in data[root]:    
     contains = int(child[:1]) 
-    output += contains    
+    output += contains
     output += (contains * part2(data, child[2:]))
   return output
 
