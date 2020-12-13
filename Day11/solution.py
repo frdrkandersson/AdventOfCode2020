@@ -36,11 +36,10 @@ def applyRules2(data, x, y):
   if value == ".": 
     return value
 
-  directions = ((-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0))  
-  dir = ("left-down", "down", "right-down", "right", "up-left", "up", "up-left", "left")
+  directions = ((-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0))    
   counter = 0  
 
-  for i, direction in enumerate(directions):    
+  for direction in directions:    
     dx, dy  = direction    
     while True:                  
       try:                
@@ -66,14 +65,17 @@ def applyRules2(data, x, y):
       break
   return "#"    
 
-def part1(data):        
+def loopThroughMatrix(data, part2 = False):
   while True:                 
     tempData = deepcopy(data)
     output = 0
     changeCounter = 0    
     for x in range(len(data)):
       for y in range(len(data[x])):        
-        value = applyRules(data, x, y)
+        if not part2:
+          value = applyRules(data, x, y)
+        else:
+          value = applyRules2(data, x, y)
         if value == "#":
           output += 1
         if data[x][y] != value:
@@ -84,23 +86,11 @@ def part1(data):
       break  
   return output
 
+def part1(data):        
+  return loopThroughMatrix(data)
+
 def part2(data):          
-  while True:                 
-    tempData = deepcopy(data)
-    output = 0
-    changeCounter = 0            
-    for x in range(len(data)):
-      for y in range(len(data[x])):        
-        value = applyRules2(data, x, y)
-        if value == "#":
-          output += 1
-        if data[x][y] != value:
-          changeCounter += 1          
-          tempData[x][y] = value                              
-    data = tempData                        
-    if changeCounter == 0:
-      break  
-  return output
+  return loopThroughMatrix(data, True)
 
 print(part1(data))
 print(part2(data))
